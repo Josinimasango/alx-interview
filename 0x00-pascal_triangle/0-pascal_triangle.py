@@ -2,30 +2,25 @@
 """Pascal Triangle"""
 
 def pascal_triangle(n):
+
     if n <= 0:
         return []
 
-    # Initializing the triangle with the first row
-    triangle = [[1]]
+    pascal_triangle = [0] * n
 
-    # Generating each subsequent row
-    for i in range(1, n):
-        row = [1]
+    for i in range(n):
+        # Creating the row
+        new_row = [0] * (i + 1)
+        new_row[0] = 1
+        new_row[len(new_row) - 1] = 1
+
+        # Calculating values
         for j in range(1, i):
-            row.append(triangle[i-1][j-1] + triangle[i-1][j])
-        row.append(1)
-        triangle.append(row)
+            if j > 0 and j < len(new_row):
+                a = pascal_triangle[i - 1][j]
+                b = pascal_triangle[i - 1][j - 1]
+                new_row[j] = a + b
 
-    return triangle
+        pascal_triangle[i] = new_row
 
-# Testing the function with the provided example
-if __name__ == "__main__":
-    def print_triangle(triangle):
-        """
-        Print the triangle
-        """
-        for row in triangle:
-            print("[{}]".format(",".join([str(x) for x in row])))
-
-    print_triangle(pascal_triangle(5))
-
+    return pascal_triangle
